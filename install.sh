@@ -64,3 +64,32 @@ pacman -Sy
 pacman --noconfirm -S pacman-contrib
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 awk '/## United States/{print;getline;print}' /etc/pacman.d/mirrorlist.backup | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 10 - > /etc/pacman.d/mirrorlist
+
+echo -e "instaling arch and base packages"
+pacstrap /mnt base linux-lts linux-firmware
+
+echo -e "Generate fstab"
+genfstab -U /mnt >> /mnt/etc/fstab
+
+echo -e"Chroot"
+arch-chroot /mnt
+
+##### Everything here is after root folder change
+### change local time to my local timezone
+echo -e "Set Timezone and clock"
+ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+hwclock --systohc
+
+echo -e "set localization info"
+locale-gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+### skiped setting keyboard layout as no change has been made and defualt is all that is needed for me
+
+echo -e "Setup hostename"
+echo "AVM" >> /etc/hostname
+
+echo -e "Setup hosts file"
+echo -e "127.0.0.1\tlocalhost" >> /etc/hosts
+echo -e "::1\tlocalhost" >> /etc/hosts
+echo -e "127.0.1.1\tAVM.localdomain\tAVM" >> /etc/hosts
+
