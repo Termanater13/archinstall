@@ -48,8 +48,8 @@ if [ $BOOT = "UEFI" ]
 then
     #sdX1 boot(512MiB)|SdX2 root(whats left after sdX1 or sdx3)|sdX3 swap(4GiB)
     parted -a optimal -s /dev/sda -- mklabel gpt mkpart primary ext2 0% 512MiB set 1 esp on mkpart primary ext4 512MiB -4GiB mkpart primary linux-swap -4GiB 100% set 3 swap on
-    mkfs.ext2 /dev/sda1
-    mkfs.ext4 /dev/sda2
+    mkfs.ext2 -F /dev/sda1
+    mkfs.ext4 -F /dev/sda2
     mkswap /dev/sda3
     mount /dev/sda2 /mnt
     mkdir /mnt/boot
