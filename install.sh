@@ -5,7 +5,9 @@ EROR='\e[0;31m'
 WARN='\e[1;33m'
 SUCC='\e[0;32m'
 CLER='\e[0m'
-NOTE="\e[1;37m"
+NOTE='\e[1;37m'
+LEGA='\e[1;35m'
+UEFI='\e[1;34m'
 
 
 ### Check for internet Connection
@@ -33,10 +35,10 @@ fi
 ### Verify the boot mode
 if [ -d "/sys/firmware/efi" ]
 then
-    echo -e "\e[1;34mUEFI boot \e[0mmode"
+    echo -e "${UEFI}UEFI boot ${CLER}mode"
     BOOT="UEFI"
 else
-    echo -e "\e[1;35mLegacy boot \e[0mmode"
+    echo -e "${LEGA}Legacy boot ${CLER}mode"
     BOOT="LEGACY"
 fi
 
@@ -74,14 +76,14 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 echo -e "${NOTE}Chroot${CLER}"
 arch-chroot /mnt
-
+### EVERY THING ARTER arch-chroot WILL NOT RUN MOVE TO NEW SCRIPT AND PLACE IT UNDER 
 ##### Everything here is after root folder change
 ### change local time to my local timezone
 echo -e "${NOTE}Set Timezone and clock"
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc
 
-echo -e "set localization info${CLER}"
+echo -e "${NOTE}set localization info${CLER}"
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 ### skiped setting keyboard layout as no change has been made and defualt is all that is needed for me
