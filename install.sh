@@ -8,11 +8,11 @@ CLER='\e[0m'
 
 
 ### Check for internet Connection
-printf "${CLER}Checking for internet Connection: "
+echo -e "${CLER}Checking for internet Connection: "
 if ping -q -c 1 -W 1 google.com > /dev/null; then
-    printf "${SUCC}Connected${CLER}\n"
+    echo -e "${SUCC}Connected${CLER}\n"
 else
-    printf "${EROR}NOT CONNECTED${CLER} Please check your connection and try again"
+    echo -e "${EROR}NOT CONNECTED${CLER} Please check your connection and try again"
     # exit with code 1
     exit 1
 fi
@@ -32,10 +32,10 @@ fi
 ### Verify the boot mode
 if [ -d "/sys/firmware/efi" ]
 then
-    printf "\e[1;34mUEFI boot \e[0mmode"
+    echo -e "\e[1;34mUEFI boot \e[0mmode"
     BOOT="UEFI"
 else
-    printf "\e[1;35mLegacy boot \e[0mmode"
+    echo -e "\e[1;35mLegacy boot \e[0mmode"
     BOOT="LEGACY"
 fi
 
@@ -50,8 +50,8 @@ then
     mkfs.fat32 /dev/sda1
     mkfs.ext4 /dev/sda2
     mkswap /dev/sda3
-    mount /dev/sda1 /mnt/boot
     mount /dev/sda2 /mnt
+    mount /dev/sda1 /mnt/boot
     swapon /dev/sda3
 else
     #sdX1 root(rest minus sdX2)|sdX2 swap(4GiB)
