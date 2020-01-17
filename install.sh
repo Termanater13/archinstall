@@ -50,7 +50,7 @@ then
     mkfs.ext2 /dev/sda1
     mkfs.ext4 /dev/sda2
     mkswap /dev/sda3
-    mount /dev/sda2wget /mnt
+    mount /dev/sda2 /mnt
     mkdir /mnt/boot
     mount /dev/sda1 /mnt/boot
     swapon /dev/sda3
