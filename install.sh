@@ -46,11 +46,11 @@ timedatectl set-ntp true
 if [ $BOOT = "UEFI" ]
 then
     #sdX1 boot(512MiB)|SdX2 root(whats left after sdX1 or sdx3)|sdX3 swap(4GiB)
-    parted -a optimal -s /dev/sda -- mklabel gpt mkpart primary fat32 0% 512MiB set 1 esp on mkpart primary ext4 512MiB -4GiB mkpart primary linux-swap -4GiB 100% set 3 swap on
-    mkfs.fat32 /dev/sda1
+    parted -a optimal -s /dev/sda -- mklabel gpt mkpart primary ext2 0% 512MiB set 1 esp on mkpart primary ext4 512MiB -4GiB mkpart primary linux-swap -4GiB 100% set 3 swap on
+    mkfs.ext2 /dev/sda1
     mkfs.ext4 /dev/sda2
     mkswap /dev/sda3
-    mount /dev/sda2 /mnt
+    mount /dev/sda2wget /mnt
     mkdir /mnt/boot
     mount /dev/sda1 /mnt/boot
     swapon /dev/sda3
