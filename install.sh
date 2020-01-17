@@ -3,7 +3,7 @@
 ### Varibles to run the rest of the script with
 EROR='\e[31m'
 WARN='\e[1;33m'
-SUCC='\e[32'
+SUCC='\e[32m'
 CLER='\e[0m'
 
 
@@ -51,6 +51,7 @@ then
     mkfs.ext4 /dev/sda2
     mkswap /dev/sda3
     mount /dev/sda2 /mnt
+    mkdir /mnt/boot
     mount /dev/sda1 /mnt/boot
     swapon /dev/sda3
 else
