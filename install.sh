@@ -71,7 +71,7 @@ pacstrap /mnt base linux-lts linux-firmware
 echo -e "Generate fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
-echo -e"Chroot"
+echo -e "Chroot"
 arch-chroot /mnt
 
 ##### Everything here is after root folder change
