@@ -58,3 +58,9 @@ else
     #sdX1 root(rest minus sdX2)|sdX2 swap(4GiB)
     parted -a optimal -s /dev/sda -- mklabel msdos mkpart primary ext4 0% -4 GiB set 1 boot on mkpart primary linux swap -4GiB 100% set 2 swap on
 fi
+
+echo -e "Ranking Pacman Mirrors"
+pacman -Sy
+pacman --noconfirm -S pacman-contrib
+mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+awk '/## United States/{print;getline;print}' /etc/pacman.d/mirrorlist.backup | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 10 - > /etc/pacman.d/mirrorlist
