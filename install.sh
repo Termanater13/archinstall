@@ -1,14 +1,15 @@
 #!/bin/bash
 
 ### Varibles to run the rest of the script with
-EROR='\e[31m'
+EROR='\e[0;31m'
 WARN='\e[1;33m'
-SUCC='\e[32m'
+SUCC='\e[0;32m'
 CLER='\e[0m'
+NOTE="\e[1;37m"
 
 
 ### Check for internet Connection
-echo -e "${CLER}Checking for internet Connection: "
+echo -e "${NOTE}Checking for internet Connection:${CLER}"
 if ping -q -c 1 -W 1 google.com > /dev/null; then
     echo -e "${SUCC}Connected${CLER}\n"
 else
@@ -59,36 +60,36 @@ else
     parted -a optimal -s /dev/sda -- mklabel msdos mkpart primary ext4 0% -4 GiB set 1 boot on mkpart primary linux swap -4GiB 100% set 2 swap on
 fi
 
-echo -e "Ranking Pacman Mirrors"
+echo -e "${NOTE}Ranking Pacman Mirrors${CLER}"
 pacman -Sy
 pacman --noconfirm -S pacman-contrib
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 awk '/## United States/{print;getline;print}' /etc/pacman.d/mirrorlist.backup | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 10 - > /etc/pacman.d/mirrorlist
 
-echo -e "instaling arch and base packages"
+echo -e "${NOTE}instaling arch and base packages${CLER}"
 pacstrap /mnt base linux-lts linux-firmware
 
-echo -e "Generate fstab"
+echo -e "${NOTE}Generate fstab${CLER}"
 genfstab -U /mnt >> /mnt/etc/fstab
 
-echo -e "Chroot"
+echo -e "${NOTE}Chroot${CLER}"
 arch-chroot /mnt
 
 ##### Everything here is after root folder change
 ### change local time to my local timezone
-echo -e "Set Timezone and clock"
+echo -e "${NOTE}Set Timezone and clock"
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc
 
-echo -e "set localization info"
+echo -e "set localization info${CLER}"
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 ### skiped setting keyboard layout as no change has been made and defualt is all that is needed for me
 
-echo -e "Setup hostename"
+echo -e "${NOTE}Setup hostename${CLER}"
 echo "AVM" >> /etc/hostname
 
-echo -e "Setup hosts file"
+echo -e "${NOTE}Setup hosts file${CLER}"
 echo -e "127.0.0.1\tlocalhost" >> /etc/hosts
 echo -e "::1\tlocalhost" >> /etc/hosts
 echo -e "127.0.1.1\tAVM.localdomain\tAVM" >> /etc/hosts
