@@ -75,7 +75,7 @@ echo -e "${NOTE}Generate fstab${CLER}"
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo -e "${NOTE}Getting Post install script${CLER}"
-wget https://raw.githubusercontent.com/Termanater13/archinstall/master/postinstall.sh
+wget https://raw.githubusercontent.com/Termanater13/archinstall/master/postinstall.sh -P /mnt/root/
 
 echo -e "${NOTE}Chroot${CLER}"
 arch-chroot /mnt
