@@ -17,3 +17,7 @@ echo -e "${NOTE}Setup hosts file${CLER}"
 echo -e "127.0.0.1\tlocalhost" >> /etc/hosts
 echo -e "::1\tlocalhost" >> /etc/hosts
 echo -e "127.0.1.1\tAVM.localdomain\tAVM" >> /etc/hosts
+
+### Initramfs
+### Root password
+### Boot loader

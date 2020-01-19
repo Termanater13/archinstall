@@ -1,5 +1,51 @@
 #!/bin/bash
 
+##### arguments test
+### set arg var defaults
+ARGCASE="CHECK"
+VMINSTALL="FALSE"
+RSAUPASS="FALSE"
+for arg in "$@"
+do
+    case $ARGMODE in
+        CHECK)
+            case $arg in
+                -u | --username)
+                ARGMODE="USERNAME"
+                ;;
+                -p | --userpass | --userpassword)
+                ARGMODE="USERPASS"
+                ;;
+                -r | --rootpass | --rootpassword)
+                ARGMODE="ROOTPASS"
+                ;;
+                -vm)
+                VMINSTALL="TRUE"
+                ;;
+                -h | --help | *)
+                echo "This Script is for automating the install of arch linux"
+                echo "-u\t--username\n\tSet the user name of the users account"
+                echo "-p\t--userpass\t--userpassword\n\tSet the user password of the users account"
+                echo "-r\t--rootpass\t--rootpassword\n\tSet the root user's password"
+                echo "-vm\n\tThis is for when instaling to a virtual machine as some items are not needed since host machene takes care of them"
+                echo "-rsau\n\tSet Root user password to be the same as user\n\tNOTE: This is not recomended as this could be a security risk"
+                echo "-h\t--help\n\tshow this text"
+                exit 0
+                ;;
+            esac
+            ;;
+        USERNAME)
+            USERNAME=$arg
+            ;;
+        USERPASS)
+            USERPASS=$arg
+            ;;
+        ROOTPASS)
+            ROOTPASS=$arg
+            ;;
+    esac
+done
+
 ### Varibles to run the rest of the script with
 EROR='\e[0;31m'
 WARN='\e[1;33m'
@@ -35,10 +81,10 @@ fi
 ### Verify the boot mode
 if [ -d "/sys/firmware/efi" ]
 then
-    echo -e "${UEFI}UEFI boot ${CLER}mode"
+    echo -e "${UEFI}UEFI boot ${NOTE}mode${CLER}"
     BOOT="UEFI"
 else
-    echo -e "${LEGA}Legacy boot ${CLER}mode"
+    echo -e "${LEGA}Legacy boot ${NOTE}mode${CLER}"
     BOOT="LEGACY"
 fi
 
@@ -60,6 +106,10 @@ then
 else
     #sdX1 root(rest minus sdX2)|sdX2 swap(4GiB)
     parted -a optimal -s /dev/sda -- mklabel msdos mkpart primary ext4 0% -4 GiB set 1 boot on mkpart primary linux swap -4GiB 100% set 2 swap on
+    mkfs.ext4 -F /dev/sda1
+    mkswap /dev/sda2
+    mount /dev/sda1 /mnt
+    swapon /dev/sad2
 fi
 
 echo -e "${NOTE}Ranking Pacman Mirrors${CLER}"
@@ -78,6 +128,6 @@ echo -e "${NOTE}Getting Post install script${CLER}"
 wget https://raw.githubusercontent.com/Termanater13/archinstall/master/postinstall.sh -P /mnt/root/
 
 echo -e "${NOTE}Chroot${CLER}"
-arch-chroot /mnt
+arch-chroot /mnt /mnt/root/postinstall.sh
 
 
