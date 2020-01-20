@@ -3,7 +3,6 @@
 ##### arguments test
 ### set arg var defaults
 ARGMODE="CHECK"
-VMINSTALL="FALSE"
 RSAUPASS="FALSE"
 for arg in "$@"
 do
@@ -22,6 +21,9 @@ do
 				-vm)
 				VMINSTALL="TRUE"
 				;;
+                -nvm)
+                VMINSTALL="FALSE"
+                ;;
 				-h | --help | *)
 				echo "This Script is for automating the install of arch linux"
 				echo "-u\t--username\n\tSet the user name of the users account"
@@ -36,12 +38,15 @@ do
 			;;
 		USERNAME)
 			USERNAME=$arg
+            ARGMODE="CHECK"
 			;;
 		USERPASS)
 			USERPASS=$arg
+            ARGMODE="CHECK"
 			;;
 		ROOTPASS)
 			ROOTPASS=$arg
+            ARGMODE="CHECK"
 			;;
 	esac
 done
@@ -55,6 +60,7 @@ NOTE='\e[1;37m'
 LEGA='\e[1;35m'
 UEFI='\e[1;34m'
 
+##### add checks to make sure if all arguments are set
 
 ### Check for internet Connection
 echo -e "${NOTE}Checking for internet Connection:${CLER}"
@@ -128,6 +134,6 @@ echo -e "${NOTE}Getting Post install script${CLER}"
 wget https://raw.githubusercontent.com/Termanater13/archinstall/master/postinstall.sh -P /mnt/root/
 
 echo -e "${NOTE}Chroot${CLER}"
-arch-chroot /mnt /mnt/root/postinstall.sh
+arch-chroot /mnt /mnt/root/postinstall.sh 
 
 
