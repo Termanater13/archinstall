@@ -2,7 +2,7 @@
 
 ##### arguments test
 ### set arg var defaults
-ARGCASE="CHECK"
+ARGMODE="CHECK"
 VMINSTALL="FALSE"
 RSAUPASS="FALSE"
 for arg in "$@"
