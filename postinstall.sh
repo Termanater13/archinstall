@@ -6,6 +6,7 @@ ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc
 
 echo -e "${NOTE}set localization info${CLER}"
+sed -i 's/^#en_US.UTF-8/en_US.utf-8/' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 ### skiped setting keyboard layout as no change has been made and defualt is all that is needed for me
