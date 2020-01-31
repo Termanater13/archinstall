@@ -28,11 +28,16 @@ do
             USERPASS=$arg
             ARGMODE="ARGCHECK";;
         ARGCHECK)
-            echo "extra arg: $arg";;
+            echo "extra arg: $arg"
             case $arg in
                 --vm)
-                    VMINSTALL="TRUE"
-            esac
+                    VMINSTALL="TRUE";;
+                *)
+                    if [ -z "$ROOTPASS" ]
+                    then
+                        ROOTPASS=$arg
+                    fi
+            esac;;
     esac
 done
 ##### makesure args passed properly and all required set the appropret variables
