@@ -16,7 +16,7 @@
 ################################################################################
 ##### process arguments passed
 ARGNUM=$#
-ARGEMODE="ONE"
+ARGMODE="ONE"
 for arg in "$@"
 do
     case $ARGMODE in
