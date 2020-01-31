@@ -5,12 +5,16 @@ echo -e "${NOTE}Set Timezone and clock"
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc
 
+##### Set Localazaion
 echo -e "${NOTE}set localization info${CLER}"
+### uncomment the one line for my local and run local-gen
 sed -i 's/^#en_US.UTF-8/en_US.utf-8/' /etc/locale.gen
 locale-gen
+### sety lang Variable in config to locale
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 ### skiped setting keyboard layout as no change has been made and defualt is all that is needed for me
 
+##### Setup Hostename 
 echo -e "${NOTE}Setup hostename${CLER}"
 echo "AVM" >> /etc/hostname
 
