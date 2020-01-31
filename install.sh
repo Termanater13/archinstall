@@ -17,6 +17,7 @@
 ##### process arguments passed
 ARGNUM=$#
 ARGMODE="ONE"
+VMINSTALL=FALSE
 for arg in "$@"
 do
     case $ARGMODE in
@@ -28,9 +29,14 @@ do
             ARGMODE="ARGCHECK";;
         ARGCHECK)
             echo "extra arg: $arg";;
+            case $arg in
+                --vm)
+                    VMINSTALL="TRUE"
+            esac
     esac
 done
 ##### makesure args passed properly and all required set the appropret variables
 echo "USERNAME: ${USERNAME}"
 echo "USERPASS: ${USERPASS}"
+echo "VMINSTALL: ${VMINSTALL}"
 echo "# OF ARGS: ${ARGNUM}"
