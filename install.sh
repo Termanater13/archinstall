@@ -22,12 +22,12 @@ do
     case $ARGMODE in
         ONE)
             USERNAME=$arg
-            ARGMODE="TWO"
-        ;;
+            ARGMODE="TWO";;
         TWO)
             USERPASS=$arg
-            ARGMODE="ARGCHECK"
-        ;;
+            ARGMODE="ARGCHECK";;
+        ARGCHECK)
+            echo "extra arg: $arg";;
     esac
 done
 ##### makesure args passed properly and all required set the appropret variables
