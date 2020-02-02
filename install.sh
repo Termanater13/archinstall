@@ -62,3 +62,19 @@ echo "USERPASS: ${USERPASS}"
 echo "VMINSTALL: ${VMINSTALL}"
 echo "ROOTPASS: ${ROOTPASS}"
 echo "# OF ARGS: ${ARGNUM}"
+
+### Varibles to run the rest of the script with
+EROR='\e[0;31m'
+WARN='\e[1;33m'
+SUCC='\e[0;32m'
+CLER='\e[0m'
+NOTE='\e[1;37m'
+LEGA='\e[1;35m'
+UEFI='\e[1;34m'
+
+echo -e "${EROR}Error text${CLER}"
+echo -e "${WARN}Wanrning text${CLER}"
+echo -e "${SUCC}SUCESS text${CLER}"
+echo -e "${NOTE}NOTE text${CLER}"
+echo -e "${LEGA}Legacy text${CLER}"
+echo -e "${UEFI}UEFI text${CLER}"
