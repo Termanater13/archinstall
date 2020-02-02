@@ -58,7 +58,17 @@ do
     esac
 done
 ##### makesure args passed properly and all required set the appropret variables
-if [ -z "ROOTPASS" ]
+if [ -z "$USERNAME" ]
+then
+    echo "user name not set"
+fi
+
+if [ -z "$USERPASS" ]
+then
+    echo "user password not set"
+fi
+
+if [ -z "$ROOTPASS" ]
 then
     ROOTPASS=$USERPASS
 fi
