@@ -9,6 +9,15 @@
 # (I3) and that script will not be required to be ran for a complete install.
 ################################################################################
 
+############################# Color text variables #############################
+EROR='\e[0;31m'
+WARN='\e[1;33m'
+SUCC='\e[0;32m'
+CLER='\e[0m'
+NOTE='\e[1;37m'
+LEGA='\e[1;35m'
+UEFI='\e[1;34m'
+
 ################################ Argument Test #################################
 # pattern: install.sh <username> <user_password> <user_aurgs_here>
 # assumptions if onlyw 2 passed
@@ -54,23 +63,7 @@ then
     ROOTPASS=$USERPASS
 fi
 
-################################################################################
-##### ANYTHING PAST THIS IS CHECKS TO MAKE SURE SCRIPT IS RUNNING CORRECTLY ####
-################################################################################
-echo "USERNAME: ${USERNAME}"
-echo "USERPASS: ${USERPASS}"
-echo "VMINSTALL: ${VMINSTALL}"
-echo "ROOTPASS: ${ROOTPASS}"
-echo "# OF ARGS: ${ARGNUM}"
-
-### Varibles to run the rest of the script with
-EROR='\e[0;31m'
-WARN='\e[1;33m'
-SUCC='\e[0;32m'
-CLER='\e[0m'
-NOTE='\e[1;37m'
-LEGA='\e[1;35m'
-UEFI='\e[1;34m'
+echo "${ROOTPASS}"
 
 echo -e "${EROR}Error text${CLER}"
 echo -e "${WARN}Wanrning text${CLER}"
