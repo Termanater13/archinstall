@@ -18,66 +18,33 @@ NOTE='\e[1;37m'
 LEGA='\e[1;35m'
 UEFI='\e[1;34m'
 
-################################ Argument Test #################################
-# pattern: install.sh <username> <user_password> <user_aurgs_here>
-# assumptions if onlyw 2 passed
-#     1.) root_password is same as user
-#     2.) Script is for a Computer and not a VM
-######################## Variables used in this scritp #########################
-# ARGMODE | This holds the necessary value so that the current argument can be 
-#           processed properly
-# VMINSTALL | This holds wether the install is on a Virtual Machine
-# USERNAME | The user name for the user
-# USERPASS | Password for the user account
-# ROOTPASS | Root account password
+################################## Arguments ###################################
+# No arguments will be passed in to this file as all appropriate questions will
+# be asked at runtime This File will ignore all arguments passed to it.
 ################################################################################
-##### process arguments passed
-ARGNUM=$#
-ARGMODE="ONE"
-VMINSTALL=FALSE
-for arg in "$@"
-do
-    case $ARGMODE in
-        ONE)
-            USERNAME=$arg
-            ARGMODE="TWO";;
-        TWO)
-            USERPASS=$arg
-            ARGMODE="ARGCHECK";;
-        ARGCHECK)
-            echo "extra arg: $arg"
-            case $arg in
-                --vm)
-                    VMINSTALL="TRUE";;
-                *)
-                    if [ -z "$ROOTPASS" ]
-                    then
-                        ROOTPASS=$arg
-                    fi
-            esac;;
-    esac
-done
-##### makesure args passed properly and all required set the appropret variables
-if [ -z "$USERNAME" ]
-then
-    echo "user name not set"
-fi
 
-if [ -z "$USERPASS" ]
-then
-    echo "user password not set"
-fi
+############################### Startup questions ##############################
+# These questions are to help set up the install
+################################################################################
 
-if [ -z "$ROOTPASS" ]
-then
-    ROOTPASS=$USERPASS
-fi
+##### Warning #####
+whiptail --backtitle "   Arch Install" --title "NOTICE" --msgbox "This file is Provided as is, no warranty is given or should be expected.\nScript is open source." 9 42
+##### Username #####
+USERNAME=$(whiptail --backtitle "   Arch Install" --title "USERNAME" --inputbox "Please enter a valid Username." 8 42)
+##### User Password#####
+PASSWORD=$(whiptail --backtitle "   Arch Install" --title "PASSWORD" --passwordbpx "Please enter a password for the user account" 8 42)
+##### RootPassword (blank for same as user) #####
 
-echo "${ROOTPASS}"
+##### VM install? #####
 
-echo -e "${EROR}Error text${CLER}"
-echo -e "${WARN}Wanrning text${CLER}"
-echo -e "${SUCC}SUCESS text${CLER}"
-echo -e "${NOTE}NOTE text${CLER}"
-echo -e "${LEGA}Legacy text${CLER}"
-echo -e "${UEFI}UEFI text${CLER}"
+##### Hardrive settings #####
+
+##### other as needed #####
+
+
+############# Just some tests to see if everything is running right ############
+##### any code here is temporary to see if code above ir running correctly #####
+echo "Username:"
+echo $USAERNAME
+echo "Password:"
+echo $PASSWORD
