@@ -1,3 +1,4 @@
+#!/bin/bash
 ################################### Details ####################################
 # CURRENTLY WIP 
 # This script is for installing a minimum install of arch to a computer. This
@@ -45,6 +46,6 @@ PASSWORD=$(whiptail --backtitle "   Arch Install" --title "PASSWORD" --passwordb
 ############# Just some tests to see if everything is running right ############
 ##### any code here is temporary to see if code above ir running correctly #####
 echo "Username:"
-echo $USAERNAME
+echo "$USERNAME"
 echo "Password:"
-echo $PASSWORD
+echo "$PASSWORD"
