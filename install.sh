@@ -49,6 +49,16 @@ DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be di
 DISVM=("${DSHARED[@]}")
 DISVM+=( --title "VM" )
 DISVM+=( --yesno "Are you installing to a VM?" 8 39 )
+##### Harddrive Swap Size #####
+DHDSWAPOPT=( 1 "1 GiB" )
+DHDSWAPOPT+=( 2 "2 GiB" )
+DHDSWAPOPT+=( 3 "3 GiB" )
+DHDSWAPOPT+=( 4 "4 GiB" )
+DHDSWAPOPT+=( 5 "5 GiB" )
+DHDSWAP=( "${DSHARED[@]}" )
+DHDSWAP+=( --title "Swap Size" )
+DHDSWAP+=( --menu "Select Swap partition size" 22 76 16 )
+DHDSWAP+=( "${DHDSWAPOPT[@]}" )
 
 
 ############################### Startup questions ##############################
@@ -72,6 +82,7 @@ else
     ISVM="NON VM Install"
 fi
 ##### Hardrive settings #####
+HDSWAP=$(dialog "${DHDSWAP[@]}")
 
 ##### other as needed #####
 
@@ -86,3 +97,5 @@ echo "ROOT PASSWORD:"
 echo "$ROOTPASS"
 echo "VM install:"
 echo "$ISVM"
+echo "Swap Partriotion Drive:"
+echo "$HDSWAP"
