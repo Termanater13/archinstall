@@ -24,6 +24,29 @@ UEFI='\e[1;34m'
 # be asked at runtime This File will ignore all arguments passed to it.
 ################################################################################
 
+################################# Dialog setup #################################
+# This part sets up the dialog inputs used though out this script
+################################################################################
+#### Shared part of the dialog
+DSHARED=( --stdout --backtitle "    Arch Install" )
+#### Set USERNAME dialog
+DUSERNAME=("${DSHARED[@]}")
+DUSERNAME+=( --title "USERNAME" )
+DUSERNAME+=( --inputbox "please input a valid username" 8 39 )
+#### Set USER PASSWORD dialog
+DUSERPASS=("${DSHARED[@]}")
+DUSERPASS+=( --title "USER PASSWORD" )
+DUSERPASS+=( --passwordbox "Enter the user's Password" 8 39 )
+#### Set ROOT PASSWORD dialog
+DROOTPASS=("${DSHARED[@]}")
+DROOTPASS+=( --title "ROOT PASSWORD" )
+DROOTPASS+=( --passwordbox "Enter the rootassword" 8 39 )
+#### is this a VM install
+DISVM=("${DSHARED[@]}")
+DISVM+=( --title "VM" )
+DISVM+=( --yesno "Are you installing to a VM?" 8 39 )
+
+
 ############################### Startup questions ##############################
 # These questions are to help set up the install
 ################################################################################
@@ -31,7 +54,7 @@ UEFI='\e[1;34m'
 ##### Warning #####
 whiptail --backtitle "   Arch Install" --title "NOTICE" --msgbox "This file is Provided as is, no warranty is given or should be expected.\nScript is open source." 9 42
 ##### Username #####
-USERNAME=$(whiptail --backtitle "   Arch Install" --title "USERNAME" --inputbox "Please enter a valid Username." 8 42)
+USERNAME=$(dialog "${DUSERNAME[@]}")
 ##### User Password#####
 PASSWORD=$(whiptail --backtitle "   Arch Install" --title "PASSWORD" --passwordbpx "Please enter a password for the user account" 8 42)
 ##### RootPassword (blank for same as user) #####
