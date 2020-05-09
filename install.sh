@@ -29,6 +29,10 @@ UEFI='\e[1;34m'
 ################################################################################
 #### Shared part of the dialog
 DSHARED=( --stdout --backtitle "    Arch Install" )
+#### Set Warning Dialog
+DNOTICE=("${DSHARED[@]}")
+DNOTICE+=( --title "NOTICE" )
+DNOTICE+=( --msgbox "File is provided as is, with NO Warranty.\nScript is Open Source.\nURL:\n  https://github.com/Termanater13/archinstall" )
 #### Set USERNAME dialog
 DUSERNAME=("${DSHARED[@]}")
 DUSERNAME+=( --title "USERNAME" )
@@ -40,7 +44,7 @@ DUSERPASS+=( --passwordbox "Enter the user's Password" 8 39 )
 #### Set ROOT PASSWORD dialog
 DROOTPASS=("${DSHARED[@]}")
 DROOTPASS+=( --title "ROOT PASSWORD" )
-DROOTPASS+=( --passwordbox "Enter the rootassword" 8 39 )
+DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be differnt from the user password" 8 39 )
 #### is this a VM install
 DISVM=("${DSHARED[@]}")
 DISVM+=( --title "VM" )
@@ -52,7 +56,7 @@ DISVM+=( --yesno "Are you installing to a VM?" 8 39 )
 ################################################################################
 
 ##### Warning #####
-whiptail --backtitle "   Arch Install" --title "NOTICE" --msgbox "This file is Provided as is, no warranty is given or should be expected.\nScript is open source." 9 42
+dialog "${DNOTICE[@]}"
 ##### Username #####
 USERNAME=$(dialog "${DUSERNAME[@]}")
 ##### User Password#####
