@@ -44,7 +44,7 @@ DUSERPASS+=( --passwordbox "Enter the user's Password" 8 39 )
 #### Set ROOT PASSWORD dialog
 DROOTPASS=("${DSHARED[@]}")
 DROOTPASS+=( --title "ROOT PASSWORD" )
-DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be differnt from the user password" 8 39 )
+DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be differnt from the user password" 9 39 )
 #### is this a VM install
 DISVM=("${DSHARED[@]}")
 DISVM+=( --title "VM" )
@@ -64,7 +64,13 @@ PASSWORD=$(dialog "${DUSERPASS[@]}")
 ##### Root user password #####
 ROOTPASS=$(dialog "${DROOTPASS[@]}")
 ##### VM install? #####
-ISVM=$(dialog "${DISVM[@]}")
+##### need to capure exit code, 0=Yes, 1=No #####
+if $(dialog "${DISVM[@]}")
+then
+    ISVM="VM Install"
+else
+    ISVM="NON VM Install"
+fi
 ##### Hardrive settings #####
 
 ##### other as needed #####
