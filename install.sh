@@ -32,7 +32,7 @@ DSHARED=( --stdout --backtitle "    Arch Install" )
 #### Set Warning Dialog
 DNOTICE=("${DSHARED[@]}")
 DNOTICE+=( --title "NOTICE" )
-DNOTICE+=( --msgbox "File is provided as is, with NO Warranty.\nScript is Open Source.\nURL:\n  https://github.com/Termanater13/archinstall" 9 50)
+DNOTICE+=( --msgbox "File is provided as is, with NO Warranty.\nScript is Open Source.\nURL:\n  https://github.com/Termanater13/archinstall" 8 50)
 #### Set USERNAME dialog
 DUSERNAME=("${DSHARED[@]}")
 DUSERNAME+=( --title "USERNAME" )
@@ -44,11 +44,11 @@ DUSERPASS+=( --passwordbox "Enter the user's Password" 8 39 )
 #### Set ROOT PASSWORD dialog
 DROOTPASS=("${DSHARED[@]}")
 DROOTPASS+=( --title "ROOT PASSWORD" )
-DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be differnt from the user password" 9 39 )
+DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be differnt from the user password" 10 39 )
 #### is this a VM install
 DISVM=("${DSHARED[@]}")
 DISVM+=( --title "VM" )
-DISVM+=( --yesno "Are you installing to a VM?" 8 39 )
+DISVM+=( --yesno "Are you installing to a VM?" 5 39 )
 ##### Harddrive Swap Size #####
 DHDSWAPOPT=( 1 "1 GiB" )
 DHDSWAPOPT+=( 2 "2 GiB" )
@@ -57,7 +57,7 @@ DHDSWAPOPT+=( 4 "4 GiB" )
 DHDSWAPOPT+=( 5 "5 GiB" )
 DHDSWAP=( "${DSHARED[@]}" )
 DHDSWAP+=( --title "Swap Size" )
-DHDSWAP+=( --menu "Select Swap partition size" 22 76 16 )
+DHDSWAP+=( --menu "Select Swap partition size" 13 30 5 )
 DHDSWAP+=( "${DHDSWAPOPT[@]}" )
 
 
