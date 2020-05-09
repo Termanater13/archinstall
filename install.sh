@@ -59,9 +59,8 @@ DISVM+=( --yesno "Are you installing to a VM?" 8 39 )
 dialog "${DNOTICE[@]}"
 ##### Username #####
 USERNAME=$(dialog "${DUSERNAME[@]}")
-##### User Password#####
-PASSWORD=$(whiptail --backtitle "   Arch Install" --title "PASSWORD" --passwordbpx "Please enter a password for the user account" 8 42)
-##### RootPassword (blank for same as user) #####
+##### User Password #####
+PASSWORD=$(dialog "${DUSERPASS[@]}")
 
 ##### VM install? #####
 
