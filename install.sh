@@ -32,7 +32,7 @@ DSHARED=( --stdout --backtitle "    Arch Install" )
 #### Set Warning Dialog
 DNOTICE=("${DSHARED[@]}")
 DNOTICE+=( --title "NOTICE" )
-DNOTICE+=( --msgbox "File is provided as is, with NO Warranty.\nScript is Open Source.\nURL:\n  https://github.com/Termanater13/archinstall" )
+DNOTICE+=( --msgbox "File is provided as is, with NO Warranty.\nScript is Open Source.\nURL:\n  https://github.com/Termanater13/archinstall" 9 50)
 #### Set USERNAME dialog
 DUSERNAME=("${DSHARED[@]}")
 DUSERNAME+=( --title "USERNAME" )
@@ -61,9 +61,10 @@ dialog "${DNOTICE[@]}"
 USERNAME=$(dialog "${DUSERNAME[@]}")
 ##### User Password #####
 PASSWORD=$(dialog "${DUSERPASS[@]}")
-
+##### Root user password #####
+ROOTPASS=$(dialog "${DROOTPASS[@]}")
 ##### VM install? #####
-
+ISVM=$(dialog "${DISVM[@]}")
 ##### Hardrive settings #####
 
 ##### other as needed #####
@@ -75,3 +76,7 @@ echo "Username:"
 echo "$USERNAME"
 echo "Password:"
 echo "$PASSWORD"
+echo "ROOT PASSWORD:"
+echo "$ROOTPASS"
+echo "VM install"
+echo "$ISVM"
