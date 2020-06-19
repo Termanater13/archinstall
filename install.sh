@@ -86,16 +86,15 @@ HDSWAP=$(dialog "${DHDSWAP[@]}")
 
 ##### other as needed #####
 
-
-############# Just some tests to see if everything is running right ############
-##### any code here is temporary to see if code above ir running correctly #####
-echo "Username:"
-echo "$USERNAME"
-echo "Password:"
-echo "$PASSWORD"
-echo "ROOT PASSWORD:"
-echo "$ROOTPASS"
-echo "VM install:"
-echo "$ISVM"
-echo "Swap Partriotion Drive:"
-echo "$HDSWAP"
+##### Begin code to start install #####
+# most of this code is copy pasted from old code and needs to be converted to match the style above in layout
+# and UI for the user
+### Check for internet Connection
+echo -e "${NOTE}Checking for internet Connection:${CLER}"
+if ping -q -c 1 -W 1 google.com > /dev/null; then
+	echo -e "${SUCC}Connected${CLER}\n"
+else
+	echo -e "${EROR}NOT CONNECTED${CLER} Please check your connection and try again"
+	# exit with code 1
+	exit 1
+fi
