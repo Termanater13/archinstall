@@ -111,44 +111,8 @@ else
 	exit 1
 fi
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+echo "Username: ${USERNAME}"
+echo "Password: ${PASSWORD}"
+echo "ROOTPASS: ${ROOTPASS}"
+echo "HDSWAP:   ${HDSWAP}"
+echo "BOOT:     ${BOOT}"
