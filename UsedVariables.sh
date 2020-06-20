@@ -1,0 +1,28 @@
+### Writen as a shell script to get color coded headers.
+### This is variables used by the scripts in this repo
+#COLOR
+EROR
+WARN
+SUCC
+CLER
+NOTE
+LEGA
+UEFI
+
+#DIALOG
+DSHARED
+DNOTICE
+DUSERNAME
+DUSERPASS
+DROOTPASS
+DISVM
+DHDSWAPOPT
+DHDOPT
+
+#SCRIPT VARIABLES
+USERNAME
+PASSWORD
+ROOT
+ISVM
+HDSWAP
+BOOT
