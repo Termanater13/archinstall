@@ -89,6 +89,18 @@ HDSWAP=$(dialog "${DHDSWAP[@]}")
 ##### Begin code to start install #####
 # most of this code is copy pasted from old code and needs to be converted to match the style above in layout
 # and UI for the user
+
+### Verify the boot mode
+if [ -d "/sys/firmware/efi" ]
+then
+	echo -e "${UEFI}UEFI boot ${NOTE}mode${CLER}"
+	BOOT="UEFI"
+else
+	echo -e "${LEGA}Legacy boot ${NOTE}mode${CLER}"
+	BOOT="LEGACY"
+fi
+
+
 ### Check for internet Connection
 echo -e "${NOTE}Checking for internet Connection:${CLER}"
 if ping -q -c 1 -W 1 google.com > /dev/null; then
@@ -98,3 +110,45 @@ else
 	# exit with code 1
 	exit 1
 fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
