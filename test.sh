@@ -17,7 +17,7 @@ C_CLER='\e[0m'
 C_NOTE='\e[1;37m'
 C_BOOT='\e[1;35m'
 C_UEFI='\e[1;34m'
-echo -e "${C_EROR}ERROR${C_WARN}WARNING${C_SUCC}SUCCESS\n${C_NOTE}NOTE${C_BOOT}BOOT${C_UEFI}UEFI${C_CLER}CLEAR"
+echo -e "${C_EROR}ERROR ${C_WARN}WARNING ${C_SUCC}SUCCESS ${C_NOTE}NOTE ${C_BOOT}BOOT ${C_UEFI}UEFI ${C_CLER}CLEAR"
 ################################## Arguments ###################################
 # No arguments will be passed in to this file as all appropriate questions will
 # be asked at runtime This File will ignore all arguments passed to it.

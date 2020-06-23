@@ -25,7 +25,7 @@ UEFI='\e[1;34m'
 ################################################################################
 
 ################################# Dialog setup #################################
-# This part sets up the dialog inputs used though out this script
+# This part setss up the dialog inputs used though out this script
 ################################################################################
 #### Shared part of the dialog
 DSHARED=( --stdout --backtitle "    Arch Install" )
@@ -59,7 +59,8 @@ DHDSWAP=( "${DSHARED[@]}" )
 DHDSWAP+=( --title "Swap Size" )
 DHDSWAP+=( --menu "Select Swap partition size" 13 30 5 )
 DHDSWAP+=( "${DHDSWAPOPT[@]}" )
-
+PARTUEFI=( -a optimal -s /dev/sda -- mklabel gpt mkpart primary ext2 0% 512MiB set 1 esp on mkpart primary ext4 512MiB -4GiB mkpart primary linux-swap -4GiB 100% set 3 swap on )
+PARTLEG=( -a optimal -s /dev/sda -- mklabel msdos mkpart primary ext4 0% -4 GiB set 1 boot on mkpart primary linux swap -4GiB 100% set 2 swap on )
 
 ############################### Startup questions ##############################
 # These questions are to help set up the install
@@ -109,6 +110,27 @@ else
 	echo -e "${EROR}NOT CONNECTED${CLER} Please check your connection and try again"
 	# exit with code 1
 	exit 1
+fi
+
+### Partition, format, and mount the harddrives based on BOOT mode
+if [ $BOOT = "UEFI" ]
+then
+	#sdX1 boot(512MiB)|SdX2 root(whats left after sdX1 or sdx3)|sdX3 swap(4GiB)
+	parted -a optimal -s /dev/sda -- mklabel gpt mkpart primary ext2 0% 512MiB set 1 esp on mkpart primary ext4 512MiB -4GiB mkpart primary linux-swap -4GiB 100% set 3 swap on
+	mkfs.ext2 -F /dev/sda1
+	mkfs.ext4 -F /dev/sda2
+	mkswap /dev/sda3
+	mount /dev/sda2 /mnt
+	mkdir /mnt/boot
+	mount /dev/sda1 /mnt/boot
+	swapon /dev/sda3
+else
+	#sdX1 root(rest minus sdX2)|sdX2 swap(4GiB)
+	parted -a optimal -s /dev/sda -- mklabel msdos mkpart primary ext4 0% -4 GiB set 1 boot on mkpart primary linux swap -4GiB 100% set 2 swap on
+	mkfs.ext4 -F /dev/sda1
+	mkswap /dev/sda2
+	mount /dev/sda1 /mnt
+	swapon /dev/sad2
 fi
 
 echo "Username: ${USERNAME}"
