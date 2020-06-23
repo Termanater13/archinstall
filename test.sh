@@ -10,13 +10,13 @@
 ################################################################################
 
 ############################# Color text variables #############################
-EROR='\e[0;31m'
-WARN='\e[1;33m'
-SUCC='\e[0;32m'
-CLER='\e[0m'
-NOTE='\e[1;37m'
-LEGA='\e[1;35m'
-UEFI='\e[1;34m'
+C_EROR='\e[0;31m'
+C_WARN='\e[1;33m'
+C_SUCC='\e[0;32m'
+C_CLER='\e[0m'
+C_NOTE='\e[1;37m'
+C_LEGA='\e[1;35m'
+C_UEFI='\e[1;34m'
 
 ################################## Arguments ###################################
 # No arguments will be passed in to this file as all appropriate questions will
@@ -24,40 +24,50 @@ UEFI='\e[1;34m'
 ################################################################################
 
 function f_VERIFY_BOOT_MODE {
-	Echo "1"
+	### Verify the boot mode
+	if [ -d "/sys/firmware/efi" ]
+	then
+		R_BOOT="UEFI"
+	else
+		BR_OOT="LEGACY"
+	fi
+	echo -e "[ 1/12] Boot Mode: ${C_BOOT}${R_BOOT}${C_CLER}"
+	return R_BOOT
 }
 function f_CONNECTION_TEST {
-	Echo "2"
+	echo "2"
 }
 function f_USERNAME_ASK {
-	Echo "3"
+	echo "3"
 }
 function f_USERPASS_ASK {
-	Echo "4"
+	echo "4"
 }
 function f_ROOTPASS_ASK {
-	Echo "5"
+	echo "5"
 }
 function f_IS_VM_INSTALL {
-	Echo "6"
+	echo "6"
 }
 function f_UPDATE_CLOCK {
-	Echo "7"
+	# This is to keep any futre code in one spot. its overkill right now
+	# timedatectl set-ntp true
+	echo "[ 7/12] Clock setup Complete"
 }
 function f_DISK_PARTITION {
-	Echo "8"
+	echo "8"
 }
 function f_ARCH_MIRRROR_SETUP {
-	Echo "9"
+	echo "9"
 }
 function f_PACSTRAP {
-	Echo "10"
+	echo "10"
 }
 function f_FSTAB {
-	Echo "11"
+	echo "11"
 }
 function f_CHROOT {
-	Echo "12"
+	echo "12"
 }
 
 
@@ -69,7 +79,7 @@ function f_CHROOT {
 
 
 ################################ Function Calls ################################
-f_VERIFY_BOOT_MODE
+BOOT=${f_VERIFY_BOOT_MODE}
 f_CONNECTION_TEST
 f_USERNAME_ASK
 f_USERPASS_ASK
@@ -82,3 +92,4 @@ f_PACSTRAP
 f_FSTAB
 ##### Last action this script can do.
 f_CHROOT
+echo "BOOT:  ${BOOT}"
