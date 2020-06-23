@@ -22,6 +22,8 @@ echo -e "${C_EROR}ERROR ${C_WARN}WARNING ${C_SUCC}SUCCESS ${C_NOTE}NOTE ${C_BOOT
 # No arguments will be passed in to this file as all appropriate questions will
 # be asked at runtime This File will ignore all arguments passed to it.
 ################################################################################
+DSHARED=( --stdout --backtitle "     Arch Install" )
+
 
 function f_VERIFY_BOOT_MODE {
 	### Verify the boot mode
@@ -43,16 +45,20 @@ function f_CONNECTION_TEST {
 	fi
 }
 function f_USERNAME_ASK {
-	echo "3"
+	DUSERNAME=("${DSHARED[@]}")
+	DUSERNAME+=( --title "USERNAME" )
+	DUSERNAME+=( --inputbox "please input a valid username" 8 39 )
+	USERNAME=${dialog "${DUSERNAME[@]}"}
+	echo "${C_NOTE}[ 3/12]${C_CLER}"
 }
 function f_USERPASS_ASK {
-	echo "4"
+	echo "${C_NOTE}[ 4/12]${C_CLER}"
 }
 function f_ROOTPASS_ASK {
-	echo "5"
+	echo "${C_NOTE}[ 5/12]${C_CLER}"
 }
 function f_IS_VM_INSTALL {
-	echo "6"
+	echo "${C_NOTE}[ 6/12]${C_CLER}"
 }
 function f_UPDATE_CLOCK {
 	# This is to keep any futre code in one spot. its overkill right now
@@ -60,19 +66,19 @@ function f_UPDATE_CLOCK {
 	echo "${C_NOTE}[ 7/12]${C_CLER} Clock setup Complete"
 }
 function f_DISK_PARTITION {
-	echo "8"
+	echo "${C_NOTE}[ 8/12]${C_CLER}"
 }
 function f_ARCH_MIRRROR_SETUP {
-	echo "9"
+	echo "${C_NOTE}[ 9/12]${C_CLER}"
 }
 function f_PACSTRAP {
-	echo "10"
+	echo "${C_NOTE}[ 10/12]${C_CLER}"
 }
 function f_FSTAB {
-	echo "11"
+	echo "${C_NOTE}[ 11/12]${C_CLER}"
 }
 function f_CHROOT {
-	echo "12"
+	echo "${C_NOTE}[ 12/12]${C_CLER}"
 }
 
 
