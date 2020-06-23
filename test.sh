@@ -27,15 +27,20 @@ function f_VERIFY_BOOT_MODE {
 	### Verify the boot mode
 	if [ -d "/sys/firmware/efi" ]
 	then
-		R_BOOT="UEFI"
+		BOOT="UEFI"
 	else
-		BR_OOT="LEGACY"
+		BOOT="LEGACY"
 	fi
-	echo -e "[ 1/12] Boot Mode: ${C_BOOT}${R_BOOT}${C_CLER}"
-	return R_BOOT
+	echo -e "[ 1/12] Boot Mode: ${C_BOOT}${BOOT}${C_CLER}"
 }
 function f_CONNECTION_TEST {
-	echo "2"
+	if ping -q -c 1 -W 1 google.com > /dev/null; then
+		echo -e "[ 2/12] ${SUCC}Connected${CLER}\n"
+	else
+		echo -e "[ 2/12] ${EROR}NOT CONNECTED${CLER} Please check your connection and try again"
+		# exit with code 1
+		exit 1
+	fi
 }
 function f_USERNAME_ASK {
 	echo "3"
@@ -79,7 +84,7 @@ function f_CHROOT {
 
 
 ################################ Function Calls ################################
-BOOT=${f_VERIFY_BOOT_MODE}
+f_VERIFY_BOOT_MODE
 f_CONNECTION_TEST
 f_USERNAME_ASK
 f_USERPASS_ASK
