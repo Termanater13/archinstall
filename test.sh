@@ -31,13 +31,13 @@ function f_VERIFY_BOOT_MODE {
 	else
 		BOOT="LEGACY"
 	fi
-	echo -e "[ 1/12] Boot Mode: ${C_BOOT}${BOOT}${C_CLER}"
+	echo -e "${C_NOTE}[ 1/12]${C_CLER} Boot Mode: ${C_BOOT}${BOOT}${C_CLER}"
 }
 function f_CONNECTION_TEST {
 	if ping -q -c 1 -W 1 google.com > /dev/null; then
-		echo -e "[ 2/12] ${C_SUCC}Connected${C_CLER}"
+		echo -e "${C_NOTE}[ 2/12]${C_CLER} ${C_SUCC}Connected${C_CLER}"
 	else
-		echo -e "[ 2/12] ${C_EROR}NOT CONNECTED${C_CLER} Please check your connection and try again"
+		echo -e "${C_NOTE}[ 2/12]${C_CLER} ${C_EROR}NOT CONNECTED${C_CLER} Please check your connection and try again"
 		# exit with code 1
 		exit 1
 	fi
@@ -57,7 +57,7 @@ function f_IS_VM_INSTALL {
 function f_UPDATE_CLOCK {
 	# This is to keep any futre code in one spot. its overkill right now
 	# timedatectl set-ntp true
-	echo "[ 7/12] Clock setup Complete"
+	echo "${C_NOTE}[ 7/12]${C_CLER} Clock setup Complete"
 }
 function f_DISK_PARTITION {
 	echo "8"
