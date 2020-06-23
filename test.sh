@@ -15,7 +15,7 @@ C_WARN='\e[1;33m'
 C_SUCC='\e[0;32m'
 C_CLER='\e[0m'
 C_NOTE='\e[1;37m'
-C_LEGA='\e[1;35m'
+C_BBOT='\e[1;35m'
 C_UEFI='\e[1;34m'
 
 ################################## Arguments ###################################
@@ -35,9 +35,9 @@ function f_VERIFY_BOOT_MODE {
 }
 function f_CONNECTION_TEST {
 	if ping -q -c 1 -W 1 google.com > /dev/null; then
-		echo -e "[ 2/12] ${SUCC}Connected${CLER}\n"
+		echo -e "[ 2/12] ${C_SUCC}Connected${C_CLER}"
 	else
-		echo -e "[ 2/12] ${EROR}NOT CONNECTED${CLER} Please check your connection and try again"
+		echo -e "[ 2/12] ${C_EROR}NOT CONNECTED${C_CLER} Please check your connection and try again"
 		# exit with code 1
 		exit 1
 	fi
