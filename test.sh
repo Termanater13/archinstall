@@ -115,4 +115,7 @@ f_PACSTRAP
 f_FSTAB
 ##### Last action this script can do.
 f_CHROOT
-echo "BOOT:  ${BOOT}"
+echo "BOOT:      ${BOOT}"
+echo "USERNAME:  ${USERNAME}"
+echo "USERPASS:  ${USERPASS}"
+echo "ROOTPASS:  ${ROOTPASS}"
