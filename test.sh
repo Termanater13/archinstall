@@ -1,3 +1,4 @@
+#!/bin/bash
 ################################### Details ####################################
 # CURRENTLY WIP 
 # This script is for installing a minimum install of arch to a computer. This
@@ -48,37 +49,48 @@ function f_USERNAME_ASK {
 	DUSERNAME=("${DSHARED[@]}")
 	DUSERNAME+=( --title "USERNAME" )
 	DUSERNAME+=( --inputbox "please input a valid username" 8 39 )
-	USERNAME=${dialog "${DUSERNAME[@]}"}
-	echo "${C_NOTE}[ 3/12]${C_CLER}"
+	USERNAME=$(dialog "${DUSERNAME[@]}")
+	echo -e "${C_NOTE}[ 3/12]${C_CLER}"
 }
 function f_USERPASS_ASK {
-	echo "${C_NOTE}[ 4/12]${C_CLER}"
+	DUSERPASS=("${DSHARED[@]}")
+	DUSERPASS+=( --title "USER PASSWORD" )
+	DUSERPASS+=( --passwordbox "Enter the user's Password" 8 39 )
+	PASSWORD=$(dialog "${DUSERPASS[@]}")
+	echo -e "${C_NOTE}[ 4/12]${C_CLER}"
 }
 function f_ROOTPASS_ASK {
-	echo "${C_NOTE}[ 5/12]${C_CLER}"
+	DROOTPASS=("${DSHARED[@]}")
+	DROOTPASS+=( --title "ROOT PASSWORD" )
+	DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be differnt from the user password" 10 39 )
+	ROOTPASS=$(dialog "${DROOTPASS[@]}")
+	echo -e "${C_NOTE}[ 5/12]${C_CLER}"
 }
 function f_IS_VM_INSTALL {
-	echo "${C_NOTE}[ 6/12]${C_CLER}"
+	DISVM=("${DSHARED[@]}")
+	DISVM+=( --title "VM" )
+	DISVM+=( --yesno "Are you installing to a VM?" 5 39 )
+	echo -e "${C_NOTE}[ 6/12]${C_CLER}"
 }
 function f_UPDATE_CLOCK {
 	# This is to keep any futre code in one spot. its overkill right now
 	# timedatectl set-ntp true
-	echo "${C_NOTE}[ 7/12]${C_CLER} Clock setup Complete"
+	echo -e "${C_NOTE}[ 7/12]${C_CLER} Clock setup Complete"
 }
 function f_DISK_PARTITION {
-	echo "${C_NOTE}[ 8/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 8/12]${C_CLER}"
 }
 function f_ARCH_MIRRROR_SETUP {
-	echo "${C_NOTE}[ 9/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 9/12]${C_CLER}"
 }
 function f_PACSTRAP {
-	echo "${C_NOTE}[ 10/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 10/12]${C_CLER}"
 }
 function f_FSTAB {
-	echo "${C_NOTE}[ 11/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 11/12]${C_CLER}"
 }
 function f_CHROOT {
-	echo "${C_NOTE}[ 12/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 12/12]${C_CLER}"
 }
 
 
