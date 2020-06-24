@@ -18,7 +18,7 @@ C_CLER='\e[0m'
 C_NOTE='\e[1;37m'
 C_BOOT='\e[1;35m'
 C_UEFI='\e[1;34m'
-echo -e "${C_EROR}ERROR ${C_WARN}WARNING ${C_SUCC}SUCCESS ${C_NOTE}NOTE ${C_BOOT}BOOT ${C_UEFI}UEFI ${C_CLER}CLEAR"
+
 ################################## Arguments ###################################
 # No arguments will be passed in to this file as all appropriate questions will
 # be asked at runtime This File will ignore all arguments passed to it.
@@ -56,7 +56,7 @@ function f_USERPASS_ASK {
 	DUSERPASS=("${DSHARED[@]}")
 	DUSERPASS+=( --title "USER PASSWORD" )
 	DUSERPASS+=( --passwordbox "Enter the user's Password" 8 39 )
-	PASSWORD=$(dialog "${DUSERPASS[@]}")
+	USERPASS=$(dialog "${DUSERPASS[@]}")
 	echo -e "${C_NOTE}[ 4/12]${C_CLER}"
 }
 function f_ROOTPASS_ASK {
@@ -70,11 +70,17 @@ function f_IS_VM_INSTALL {
 	DISVM=("${DSHARED[@]}")
 	DISVM+=( --title "VM" )
 	DISVM+=( --yesno "Are you installing to a VM?" 5 39 )
+	if $(dialog "${DISVM[@]}")
+	then
+		ISVM="VM Install"
+	else
+		ISVM="NON VM Install"
+	fi
 	echo -e "${C_NOTE}[ 6/12]${C_CLER}"
 }
 function f_UPDATE_CLOCK {
 	# This is to keep any futre code in one spot. its overkill right now
-	# timedatectl set-ntp true
+	timedatectl set-ntp true
 	echo -e "${C_NOTE}[ 7/12]${C_CLER} Clock setup Complete"
 }
 function f_DISK_PARTITION {
