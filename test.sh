@@ -86,16 +86,27 @@ function f_UPDATE_CLOCK {
 function f_DISK_PARTITION {
 	if [ $BOOT = "UEFI" ]
 	then
-		echo "UEFI BOOT"
+		#sdX1 boot(512MiB)|SdX2 root(whats left after sdX1 or sdx3)|sdX3 swap(4GiB)
+		parted -a optimal -s /dev/sda -- mklabel gpt \
+		mkpart primary ext2 0% 512MiB set 1 esp on \
+		mkpart primary ext4 512MiB -4GiB \
+		mkpart primary linux-swap -4GiB 100% set 3 swap on
+		mkfs.ext2 -F /dev/sda1
+		mkfs.ext4 -F /dev/sda2
+		mkswap /dev/sda3
+		mount /dev/sda2 /mnt
+		mkdir /mnt/boot
+		mount /dev/sda1 /mnt/boot
+		swapon /dev/sda3
 	else
 		#sda1 main partition/sda2 swap
 		parted -a optimal -s /dev/sda -- mklabel msdos \
 		mkpart primary ext4 0% -4GiB set 1 boot on \
-		mkpart primary linux swap -4GiB 100%
+		mkpart primary linux-swap -4GiB 100%
 		mkfs.ext4 -F /dev/sda1
 		mkswap /dev/sda2
+		swapon /dev/sda2
 		mount /dev/sda1 /mnt
-		swapon /dev/sad2
 	fi
 	echo -e "${C_NOTE}[ 8/12]${C_CLER}"
 }
