@@ -34,13 +34,13 @@ function f_VERIFY_BOOT_MODE {
 	else
 		BOOT="LEGACY"
 	fi
-	echo -e "${C_NOTE}[ 1/12]${C_CLER} Boot Mode: ${C_BOOT}${BOOT}${C_CLER}"
+	echo -e "${C_NOTE}[ 1/11]${C_CLER} Boot Mode: ${C_BOOT}${BOOT}${C_CLER}"
 }
 function f_CONNECTION_TEST {
 	if ping -q -c 1 -W 1 google.com > /dev/null; then
-		echo -e "${C_NOTE}[ 2/12]${C_CLER} ${C_SUCC}Connected${C_CLER}"
+		echo -e "${C_NOTE}[ 2/11]${C_CLER} ${C_SUCC}Connected${C_CLER}"
 	else
-		echo -e "${C_NOTE}[ 2/12]${C_CLER} ${C_EROR}NOT CONNECTED${C_CLER} Please check your connection and try again"
+		echo -e "${C_NOTE}[ 2/11]${C_CLER} ${C_EROR}NOT CONNECTED${C_CLER} Please check your connection and try again"
 		# exit with code 1
 		exit 1
 	fi
@@ -50,43 +50,31 @@ function f_USERNAME_ASK {
 	DUSERNAME+=( --title "USERNAME" )
 	DUSERNAME+=( --inputbox "please input a valid username" 8 39 )
 	USERNAME=$(dialog "${DUSERNAME[@]}")
-	echo -e "${C_NOTE}[ 3/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 3/11]${C_CLER}"
 }
 function f_USERPASS_ASK {
 	DUSERPASS=("${DSHARED[@]}")
 	DUSERPASS+=( --title "USER PASSWORD" )
 	DUSERPASS+=( --passwordbox "Enter the user's Password" 8 39 )
 	USERPASS=$(dialog "${DUSERPASS[@]}")
-	echo -e "${C_NOTE}[ 4/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 4/11]${C_CLER}"
 }
 function f_ROOTPASS_ASK {
 	DROOTPASS=("${DSHARED[@]}")
 	DROOTPASS+=( --title "ROOT PASSWORD" )
-	DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be differnt from the user password" 10 39 )
+	DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be different from the user password" 10 39 )
 	ROOTPASS=$(dialog "${DROOTPASS[@]}")
-	echo -e "${C_NOTE}[ 5/12]${C_CLER}"
-}
-function f_IS_VM_INSTALL {
-	DISVM=("${DSHARED[@]}")
-	DISVM+=( --title "VM" )
-	DISVM+=( --yesno "Are you installing to a VM?" 5 39 )
-	if $(dialog "${DISVM[@]}")
-	then
-		ISVM="VM Install"
-	else
-		ISVM="NON VM Install"
-	fi
-	echo -e "${C_NOTE}[ 6/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 5/11]${C_CLER}"
 }
 function f_UPDATE_CLOCK {
-	# This is to keep any futre code in one spot. its overkill right now
-	# timedatectl set-ntp true
-	echo -e "${C_NOTE}[ 7/12]${C_CLER} Clock setup Complete"
+	# This is to keep any future code in one spot. its overkill right now
+	timedatectl set-ntp true
+	echo -e "${C_NOTE}[ 6/11]${C_CLER} Clock setup Complete"
 }
 function f_DISK_PARTITION {
 	if [ $BOOT = "UEFI" ]
 	then
-		#sdX1 boot(512MiB)|SdX2 root(whats left after sdX1 or sdx3)|sdX3 swap(4GiB)
+		#sdX1 boot(512MiB)|SdX2 root(what's left after sdX1 or sdx3)|sdX3 swap(4GiB)
 		parted -a optimal -s /dev/sda -- mklabel gpt \
 		mkpart primary ext2 0% 512MiB set 1 esp on \
 		mkpart primary ext4 512MiB -4GiB \
@@ -108,19 +96,26 @@ function f_DISK_PARTITION {
 		swapon /dev/sda2
 		mount /dev/sda1 /mnt
 	fi
-	echo -e "${C_NOTE}[ 8/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 7/11]${C_CLER} Partition of hard-drive complete"
 }
 function f_ARCH_MIRRROR_SETUP {
-	echo -e "${C_NOTE}[ 9/12]${C_CLER}"
+	pacman -Sy
+	pacman --noconfirm -S pacman-contrib
+	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+	awk '/## United States/{print;getline;print}' /etc/pacman.d/mirrorlist.backup | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 10 - > /etc/pacman.d/mirrorlist
+	echo -e "${C_NOTE}[ 8/11]${C_CLER} Arch mirrors ranked"
 }
 function f_PACSTRAP {
-	echo -e "${C_NOTE}[ 10/12]${C_CLER}"
+	pacstrap /mnt base
+	echo -e "${C_NOTE}[ 9/11]${C_CLER}"
 }
 function f_FSTAB {
-	echo -e "${C_NOTE}[ 11/12]${C_CLER}"
+	genfstab -U /mnt >> /mnt/etc/fstab
+	#virtual box fstab info below this
+	echo -e "${C_NOTE}[ 10/11]${C_CLER}"
 }
 function f_CHROOT {
-	echo -e "${C_NOTE}[ 12/12]${C_CLER}"
+	echo -e "${C_NOTE}[ 11/11]${C_CLER}"
 }
 
 
@@ -137,7 +132,6 @@ f_CONNECTION_TEST
 f_USERNAME_ASK
 f_USERPASS_ASK
 f_ROOTPASS_ASK
-f_IS_VM_INSTALL
 f_UPDATE_CLOCK
 f_DISK_PARTITION
 f_ARCH_MIRRROR_SETUP
