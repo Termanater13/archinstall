@@ -26,3 +26,8 @@ ROOT
 ISVM
 HDSWAP
 BOOT
+
+#pationing
+
+PARTLEG
+PARTUEFI
