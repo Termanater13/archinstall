@@ -88,7 +88,14 @@ function f_DISK_PARTITION {
 	then
 		echo "UEFI BOOT"
 	else
-		echo "LEGACY Boot"
+		#sda1 main partition/sda2 swap
+		parted -a optimal -s /dev/sda -- mklabel msdos \
+		mkpart primary ext4 0% -4GiB set 1 boot on \
+		mkpart primary linux swap -4GiB 100%
+		mkfs.ext4 -F /dev/sda1
+		mkswap /dev/sda2
+		mount /dev/sda1 /mnt
+		swapon /dev/sad2
 	fi
 	echo -e "${C_NOTE}[ 8/12]${C_CLER}"
 }
