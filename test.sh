@@ -18,7 +18,6 @@ C_CLER='\e[0m'
 C_NOTE='\e[1;37m'
 C_BOOT='\e[1;35m'
 C_UEFI='\e[1;34m'
-echo -e "${C_EROR}ERROR ${C_WARN}WARNING ${C_SUCC}SUCCESS ${C_NOTE}NOTE ${C_BOOT}BOOT ${C_UEFI}UEFI ${C_CLER}CLEAR"
 ################################## Arguments ###################################
 # No arguments will be passed in to this file as all appropriate questions will
 # be asked at runtime This File will ignore all arguments passed to it.
@@ -34,13 +33,13 @@ function f_VERIFY_BOOT_MODE {
 	else
 		BOOT="LEGACY"
 	fi
-	echo -e "${C_NOTE}[ 1/11]${C_CLER} Boot Mode: ${C_BOOT}${BOOT}${C_CLER}"
+	echo -e "${C_NOTE}[ 4/11]${C_CLER} Boot Mode: ${C_BOOT}${BOOT}${C_CLER}"
 }
 function f_CONNECTION_TEST {
 	if ping -q -c 1 -W 1 google.com > /dev/null; then
-		echo -e "${C_NOTE}[ 2/11]${C_CLER} ${C_SUCC}Connected${C_CLER}"
+		echo -e "${C_NOTE}[ 5/11]${C_CLER} ${C_SUCC}Connected${C_CLER}"
 	else
-		echo -e "${C_NOTE}[ 2/11]${C_CLER} ${C_EROR}NOT CONNECTED${C_CLER} Please check your connection and try again"
+		echo -e "${C_NOTE}[ 5/11]${C_CLER} ${C_EROR}NOT CONNECTED${C_CLER} Please check your connection and try again"
 		# exit with code 1
 		exit 1
 	fi
@@ -50,21 +49,21 @@ function f_USERNAME_ASK {
 	DUSERNAME+=( --title "USERNAME" )
 	DUSERNAME+=( --inputbox "please input a valid username" 8 39 )
 	USERNAME=$(dialog "${DUSERNAME[@]}")
-	echo -e "${C_NOTE}[ 3/11]${C_CLER}"
+	echo -e "${C_NOTE}[ 1/11]${C_CLER}"
 }
 function f_USERPASS_ASK {
 	DUSERPASS=("${DSHARED[@]}")
 	DUSERPASS+=( --title "USER PASSWORD" )
 	DUSERPASS+=( --passwordbox "Enter the user's Password" 8 39 )
 	USERPASS=$(dialog "${DUSERPASS[@]}")
-	echo -e "${C_NOTE}[ 4/11]${C_CLER}"
+	echo -e "${C_NOTE}[ 2/11]${C_CLER}"
 }
 function f_ROOTPASS_ASK {
 	DROOTPASS=("${DSHARED[@]}")
 	DROOTPASS+=( --title "ROOT PASSWORD" )
 	DROOTPASS+=( --passwordbox "Enter the Root User Password\nTIP: This should be different from the user password" 10 39 )
 	ROOTPASS=$(dialog "${DROOTPASS[@]}")
-	echo -e "${C_NOTE}[ 5/11]${C_CLER}"
+	echo -e "${C_NOTE}[ 3/11]${C_CLER}"
 }
 function f_UPDATE_CLOCK {
 	# This is to keep any future code in one spot. its overkill right now
@@ -115,6 +114,8 @@ function f_FSTAB {
 	echo -e "${C_NOTE}[ 10/11]${C_CLER}"
 }
 function f_CHROOT {
+	# add script as a extra argument to run script after root change
+	arch-chroot /mnt 
 	echo -e "${C_NOTE}[ 11/11]${C_CLER}"
 }
 
@@ -127,17 +128,35 @@ function f_CHROOT {
 
 
 ################################ Function Calls ################################
-f_VERIFY_BOOT_MODE
-f_CONNECTION_TEST
+## Ask for user name to be used
 f_USERNAME_ASK
+## Ask for accounts password
 f_USERPASS_ASK
+## Ask for the Root user password
 f_ROOTPASS_ASK
+## verify signature
+# While recommened this step is skipped as doing it every time is unnecessary and should be done before boot
+## Boot the live system
+# Skipped as you should have already done this to be able to run script
+## Set the keyboard
+# Skip setting keyboard as default is what is needed (US)
+## Verify the Boot mode
+f_VERIFY_BOOT_MODE
+## Connect to the internet, acctualy just checking for connections as VM
+f_CONNECTION_TEST
+## update the system clock
 f_UPDATE_CLOCK
+## partition the disks, format the partitions, and mount the file systems
+# (3 steps controlled by 1 function)
 f_DISK_PARTITION
+## Select the mirrors, and rank them for best speeds.
 f_ARCH_MIRRROR_SETUP
+## install essential packages
 f_PACSTRAP
+## Configure The system/Fstab
 f_FSTAB
 ##### Last action this script can do.
+## Configure The system/Chroot
 f_CHROOT
 echo "BOOT:      ${BOOT}"
 echo "USERNAME:  ${USERNAME}"
