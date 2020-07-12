@@ -158,7 +158,3 @@ f_FSTAB
 ##### Last action this script can do.
 ## Configure The system/Chroot
 f_CHROOT
-echo "BOOT:      ${BOOT}"
-echo "USERNAME:  ${USERNAME}"
-echo "USERPASS:  ${USERPASS}"
-echo "ROOTPASS:  ${ROOTPASS}"
