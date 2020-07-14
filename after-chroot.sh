@@ -15,7 +15,7 @@ echo "${HOST}" >> /etc/hostname
 echo "127.0.0.1\tlocalhost" >> /etc/hostname
 echo "::1\tlocalhost" >> /etc/hostname
 echo "127.0.1.1\t${HOST}.localdomain\t${HOST}" >> /etc/hostname
-"
+
 
 # no ititramfs needed
 #set users and passwords
