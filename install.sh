@@ -115,7 +115,7 @@ function f_FSTAB {
 }
 function f_CHROOT {
 	# add script as a extra argument to run script after root change
-	wget https://raw.githubusercontent.com/Termanater13/archinstall/master/after-chroot.sh
+	wget https://raw.githubusercontent.com/Termanater13/archinstall/master/after-chroot.sh -O /mnt/after-chroot.sh
 	arch-chroot /mnt ./after-chroot.sh $USERNAME $USERPASS $ROOTPASS
 	echo -e "${C_NOTE}[ 11/11]${C_CLER}"
 }
