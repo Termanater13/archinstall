@@ -12,9 +12,9 @@ locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 #set Network configuration
 echo "${HOST}" >> /etc/hostname
-echo "127.0.0.1\tlocalhost" >> /etc/hostname
-echo "::1\tlocalhost" >> /etc/hostname
-echo "127.0.1.1\t${HOST}.localdomain\t${HOST}" >> /etc/hostname
+echo "127.0.0.1	localhost" >> /etc/hosts
+echo "::1	localhost" >> /etc/hosts
+echo "127.0.1.1	${HOST}.localdomain\t${HOST}" >> /etc/hosts
 
 
 # no ititramfs needed
