@@ -14,7 +14,7 @@ C_UEFI='\e[1;34m'
 #set timezone
 echo -e "${C_NOTE}Setting up Timezone${C_CLER}"
 timedatectl set-ntp true
-ls -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 timedatectl set-timezone America/New_York
 hwclock --systohc
 
