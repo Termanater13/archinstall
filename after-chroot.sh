@@ -23,8 +23,8 @@ echo -e "${C_NOTE}Setting up Localization${C_CLER}"
 sed -i 's/^#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
-#set Network configuration
 
+#set Network configuration
 echo -e "${C_NOTE}Setting up basic network settings${C_CLER}"
 echo "${HOST}" >> /etc/hostname
 echo "127.0.0.1	localhost" >> /etc/hosts
